@@ -1,0 +1,388 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Visualização do Planejamento</h2>
+
+  <!-- Dados do Evento (mantido igual) -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5>Evento: {{evento.titulo}}</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Data:</strong> {{evento.data}}</p>
+      <p><strong>Horário:</strong> {{evento.h_inicio}} - {{evento.h_fim}}</p>
+      <p><strong>Local:</strong> {{evento.local}}</p>
+      <p><strong>Diretriz:</strong> {{evento.diretriz}}</p>
+      <p><strong>Antes do Evento:</strong> {{evento.antes_evento}}</p>
+      <p><strong>Linha Editorial:</strong> {{evento.linha_editorial}}</p>
+      <p><strong>Divulgação:</strong> {{evento.divulgacao}}</p>
+      <p><strong>Observações:</strong> {{evento.observacao}}</p>
+    </div>
+  </div>
+  <!-- Formulário de Edição -->
+  <form method="POST" action="/links/editar/editarPlanejamentoADMPost/{{evento.id}}" enctype="application/x-www-form-urlencoded">
+    <!-- Remove este input, pois cada planejamento tem seu próprio id_setor -->
+    <!-- <input type="hidden" name="id_setor" value="{{user.setor}}"> -->
+    
+    <!-- Lista de Planejamentos -->
+    {{#each planejamentos}}
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h5>Planejamento - {{setorPlanejamento}}</h5>
+        </div>
+        <div class="card-body">
+            <!-- Campos hidden para identificar o planejamento -->
+            <input type="hidden" name="planejamentos[{{@index}}][id]" value="{{id}}">
+            <input type="hidden" name="planejamentos[{{@index}}][id_setor]" value="{{id_setor}}">
+
+            <!-- Campos editáveis -->
+            <div class="mb-3">
+                <label for="producao-{{id}}" class="form-label"><strong>Produção:</strong></label>
+                <textarea class="form-control" id="producao-{{id}}" name="planejamentos[{{@index}}][producao]" rows="3">{{producao}}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="escala-{{id}}" class="form-label"><strong>Escala:</strong></label>
+                <textarea class="form-control" id="escala-{{id}}" name="planejamentos[{{@index}}][escala]" rows="3">{{escala}}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="logistica-{{id}}" class="form-label"><strong>Logística:</strong></label>
+                <textarea class="form-control" id="logistica-{{id}}" name="planejamentos[{{@index}}][logistica]" rows="3">{{logistica}}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="outros-{{id}}" class="form-label"><strong>Outros:</strong></label>
+                <textarea class="form-control" id="outros-{{id}}" name="planejamentos[{{@index}}][outros]" rows="3">{{outros}}</textarea>
+            </div>
+
+            <hr>
+
+            <!-- Funcionários -->
+            <h6 class="mt-3">Funcionários:</h6>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-8">
+                        <select id="funcionarioSelect-{{id}}" class="form-select">
+                            <option value="">Selecione um funcionário</option>
+                            {{#each ../todosFuncionarios}}
+                            <option value="{{id}}">{{nome}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-sm btn-success w-100" onclick="adicionarFuncionario('{{id}}')">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="funcionariosContainer-{{id}}">
+                {{#if funcionarios.length}}
+                <ul class="list-group mb-3" id="funcionariosList-{{id}}">
+                    {{#each funcionarios}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{id}}">
+                        {{nome}}
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removerFuncionario('{{../id}}', '{{id}}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <input type="hidden" name="planejamentos[{{@../index}}][funcionarios][]" value="{{id}}">
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <p class="text-muted" id="nenhumFuncionario-{{id}}">Nenhum funcionário cadastrado.</p>
+                {{/if}}
+            </div>
+
+            <hr>
+
+            <!-- Programas -->
+            {{#if ehRadio}}
+            <!-- Lógica para rádio (com seleção de programas) -->
+            <h6 class="mt-3">Programas:</h6>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-8">
+                        <select id="programaSelect-{{id}}" class="form-select">
+                            <option value="">Selecione um programa</option>
+                            {{#each ../todosProgramas}}
+                            <option value="{{id}}">{{nome}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-sm btn-success w-100" onclick="adicionarPrograma('{{id}}')">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="programasContainer-{{id}}">
+                {{#if programas.length}}
+                <ul class="list-group mb-3" id="programasList-{{id}}">
+                    {{#each programas}}
+                    <li class="list-group-item" data-id="{{id}}">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="fw-bold">{{nome}}</div>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removerPrograma('{{../id}}', '{{id}}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label"><small><strong>Observação:</strong></small></label>
+                            <textarea class="form-control form-control-sm observacao-programa"
+                                name="planejamentos[{{@../index}}][programas][{{id}}][observacao]" rows="2">{{observacao}}</textarea>
+                        </div>
+                        <input type="hidden" name="planejamentos[{{@../index}}][programas][{{id}}][id]" value="{{id}}">
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <p class="text-muted" id="nenhumPrograma-{{id}}">Nenhum programa cadastrado.</p>
+                {{/if}}
+            </div>
+            {{else}}
+            <!-- Lógica para não-rádio (apenas textarea) -->
+            <div class="mt-4 row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <label for="programas_texto-{{id}}" class="form-label"><strong>Conteúdo</strong></label>
+                    <textarea id="programas_texto-{{id}}" name="planejamentos[{{@index}}][programas_texto]"
+                        class="form-control" rows="3">{{observacao_geral}}</textarea>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+
+    <div class="d-flex justify-content-between mb-4">
+        <a href="/links/consultas/consulta_planejamento" class="btn btn-outline-secondary">Voltar</a>
+        <div>
+            <button type="submit" class="btn btn-primary me-2">Salvar Alterações</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalExcluirPlanejamento">
+                Excluir o planejamento
+            </button>
+        </div>
+    </div>
+</form>
+
+  <!-- Modal de confirmação (mantido igual) -->
+  <div class="modal fade" id="modalExcluirPlanejamento" tabindex="-1" aria-labelledby="modalExcluirPlanejamentoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="/links/editar/excluirPlanejamentosADM/{{evento.id}}">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="modalExcluirPlanejamentoLabel">Confirmar exclusão</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza que deseja <strong>excluir todos os planejamentos</strong> associados a este evento?
+            <br><br><strong>Esta ação é irreversível!</strong>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Funções para Funcionários (mantidas iguais)
+  function adicionarFuncionario(idPlanejamento) {
+    const select = document.getElementById(`funcionarioSelect-${idPlanejamento}`);
+    const funcionarioId = select.value;
+    const funcionarioNome = select.options[select.selectedIndex].text;
+    
+    if (!funcionarioId) return;
+    
+    const container = document.getElementById(`funcionariosContainer-${idPlanejamento}`);
+    const lista = document.getElementById(`funcionariosList-${idPlanejamento}`) || criarListaFuncionarios(idPlanejamento);
+    const nenhumMsg = document.getElementById(`nenhumFuncionario-${idPlanejamento}`);
+    
+    if (nenhumMsg) nenhumMsg.remove();
+    
+    // Verificar se já existe
+    if (document.querySelector(`#funcionariosList-${idPlanejamento} li[data-id="${funcionarioId}"]`)) {
+        return;
+    }
+    
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    li.setAttribute('data-id', funcionarioId);
+    li.innerHTML = `
+        ${funcionarioNome}
+        <button type="button" class="btn btn-sm btn-danger" onclick="removerFuncionario('${idPlanejamento}', '${funcionarioId}')">
+            <i class="bi bi-trash"></i>
+        </button>
+        <input type="hidden" name="planejamentos[${getPlanejamentoIndex(idPlanejamento)}][funcionarios][]" value="${funcionarioId}">
+    `;
+    
+    lista.appendChild(li);
+    select.value = '';
+}
+
+// Função para adicionar programa
+function adicionarPrograma(idPlanejamento) {
+    const select = document.getElementById(`programaSelect-${idPlanejamento}`);
+    const programaId = select.value;
+    const programaNome = select.options[select.selectedIndex].text;
+    
+    if (!programaId) return;
+    
+    const container = document.getElementById(`programasContainer-${idPlanejamento}`);
+    const lista = document.getElementById(`programasList-${idPlanejamento}`) || criarListaProgramas(idPlanejamento);
+    const nenhumMsg = document.getElementById(`nenhumPrograma-${idPlanejamento}`);
+    
+    if (nenhumMsg) nenhumMsg.remove();
+    
+    // Verificar se já existe
+    if (document.querySelector(`#funcionariosList-${idPlanejamento} li[data-id="${programaId}"]`)) {
+        alert('Este programa já foi adicionado!');
+        return;
+    }
+    
+    // Encontrar o índice correto do planejamento
+    const planejamentoInput = document.querySelector(`input[value="${idPlanejamento}"][name*="[id]"]`);
+    const nameAttr = planejamentoInput.getAttribute('name');
+    const indexMatch = nameAttr.match(/planejamentos\[(\d+)\]/);
+    const index = indexMatch ? indexMatch[1] : '0';
+    
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.setAttribute('data-id', programaId);
+    li.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="fw-bold">${programaNome}</div>
+            <button type="button" class="btn btn-sm btn-danger" onclick="removerPrograma('${idPlanejamento}', '${programaId}')">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+        <div class="mb-2">
+            <label class="form-label"><small><strong>Observação:</strong></small></label>
+            <textarea class="form-control form-control-sm observacao-programa"
+                name="planejamentos[${index}][programas][${programaId}][observacao]" rows="2" placeholder="Digite as observações do programa"></textarea>
+        </div>
+        <input type="hidden" name="planejamentos[${index}][programas][${programaId}][id]" value="${programaId}">
+    `;
+    
+    lista.appendChild(li);
+    select.value = '';
+}
+
+function criarListaProgramas(idPlanejamento) {
+    const container = document.getElementById(`programasContainer-${idPlanejamento}`);
+    const ul = document.createElement('ul');
+    ul.className = 'list-group mb-3';
+    ul.id = `programasList-${idPlanejamento}`;
+    container.appendChild(ul);
+    return ul;
+}
+
+// Funções auxiliares
+function removerFuncionario(idPlanejamento, funcionarioId) {
+    const li = document.querySelector(`#funcionariosList-${idPlanejamento} li[data-id="${funcionarioId}"]`);
+    if (li) li.remove();
+    
+    const lista = document.getElementById(`funcionariosList-${idPlanejamento}`);
+    if (lista && lista.children.length === 0) {
+        const container = document.getElementById(`funcionariosContainer-${idPlanejamento}`);
+        const p = document.createElement('p');
+        p.className = 'text-muted';
+        p.id = `nenhumFuncionario-${idPlanejamento}`;
+        p.textContent = 'Nenhum funcionário cadastrado.';
+        container.appendChild(p);
+    }
+}
+
+function removerPrograma(idPlanejamento, programaId) {
+    const li = document.querySelector(`#programasList-${idPlanejamento} li[data-id="${programaId}"]`);
+    if (li) li.remove();
+    
+    const lista = document.getElementById(`programasList-${idPlanejamento}`);
+    if (lista && lista.children.length === 0) {
+        const container = document.getElementById(`programasContainer-${idPlanejamento}`);
+        const p = document.createElement('p');
+        p.className = 'text-muted';
+        p.id = `nenhumPrograma-${idPlanejamento}`;
+        p.textContent = 'Nenhum programa cadastrado.';
+        container.appendChild(p);
+    }
+}
+
+function criarListaFuncionarios(idPlanejamento) {
+    const container = document.getElementById(`funcionariosContainer-${idPlanejamento}`);
+    const ul = document.createElement('ul');
+    ul.className = 'list-group mb-3';
+    ul.id = `funcionariosList-${idPlanejamento}`;
+    container.appendChild(ul);
+    return ul;
+}
+
+function criarListaProgramas(idPlanejamento) {
+    const container = document.getElementById(`programasContainer-${idPlanejamento}`);
+    const ul = document.createElement('ul');
+    ul.className = 'list-group mb-3';
+    ul.id = `programasList-${idPlanejamento}`;
+    container.appendChild(ul);
+    return ul;
+}
+
+// Função para obter o índice do planejamento no array
+function getPlanejamentoIndex(idPlanejamento) {
+    const hiddenInput = document.querySelector(`input[value="${idPlanejamento}"][name*="[id]"]`);
+    if (hiddenInput) {
+        const name = hiddenInput.getAttribute('name');
+        const match = name.match(/planejamentos\[(\d+)\]/);
+        return match ? match[1] : '0';
+    }
+    return '0';
+}
+
+   function abrirModalExclusao() {
+    var myModal = new bootstrap.Modal(document.getElementById('modalExcluirPlanejamento'));
+    myModal.show();
+  }
+
+  // Verifica se o Bootstrap está carregado corretamente
+  document.addEventListener('DOMContentLoaded', function() {
+    // Configura o modal
+    var modalExclusao = document.getElementById('modalExcluirPlanejamento');
+    if (modalExclusao) {
+      // Adiciona event listener para o botão de exclusão
+      document.querySelector('[data-bs-target="#modalExcluirPlanejamento"]').addEventListener('click', function() {
+        var modal = new bootstrap.Modal(modalExclusao);
+        modal.show();
+      });
+    }
+  });
+
+  // Adicione este script no final do seu arquivo
+document.querySelector('form[action*="excluirPlanejamentos"]').addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetch(this.action, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams(new FormData(this))
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = '/links/consultas/consulta_planejamento'; // Redireciona após exclusão
+    } else {
+      alert('Erro ao excluir planejamentos');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Erro ao excluir planejamentos');
+  });
+});
+</script>

@@ -1,0 +1,470 @@
+<style>
+    /* Esconde o checkbox original */
+    .hidden-checkbox {
+        display: none;
+    }
+
+    /* Estilo para o container do checkbox */
+    .custom-checkbox {
+        display: inline-block;
+        position: relative;
+        width: 25px;
+        height: 25px;
+        cursor: not-allowed;
+    }
+
+    /* Estilo do elemento personalizado */
+    .custom-checkbox .checkmark {
+        width: 100%;
+        height: 100%;
+        background-color: #eeeeee;
+        /* Cor de fundo padrão */
+        border: 2px solid #ccc;
+        /* Borda padrão */
+        border-radius: 4px;
+        /* Canto arredondado */
+        display: inline-block;
+    }
+
+    /* Quando o checkbox está marcado */
+    .hidden-checkbox:checked+.checkmark {
+        background-color: #28a745;
+        /* Cor verde quando marcado */
+        border-color: #28a745;
+        /* Borda verde */
+    }
+
+    /* Adiciona um símbolo de check */
+    .hidden-checkbox:checked+.checkmark::after {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        width: 6px;
+        height: 12px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+    }
+
+    .hidden-checkbox:not(:checked)+.checkmark {
+        background-color: #ff0000;
+        /* Cor de fundo para não selecionado */
+        border: 2px dashed #ff0000;
+        /* Borda para diferenciar */
+        position: relative;
+    }
+
+    .hidden-checkbox:not(:checked)+.checkmark::after {
+        content: 'X';
+        /* Símbolo opcional para não selecionado */
+        position: absolute;
+        color: #ccc;
+        font-size: 15px;
+        left: 6px;
+        top: -1px;
+    }
+</style>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+
+</head>
+
+<body onload="Geeks()">
+    <div>
+        <div class="boxH1ResPadraoDesktop">
+            <div class="mesPremiadoPadraoDesktop">
+                <h1 class="h1ResPadraoDesktop">Equipamentos com Defeito</h1>
+            </div>
+            <a href="../../../profile"> <button class="svgXSairTabelas" data-placement="bottom" onclick="goBack()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M13.541 12.0007L17.3955 8.14623C17.5857 7.93898 17.6884 7.66631 17.6823 7.38512C17.6762 7.10394 17.5618 6.83597 17.3628 6.63716C17.1639 6.43835 16.8958 6.32406 16.6147 6.31815C16.3335 6.31223 16.0609 6.41515 15.8537 6.60542L15.8547 6.60442L12.0002 10.4589L8.1457 6.60442C7.93845 6.41429 7.66578 6.31154 7.38459 6.31764C7.10341 6.32374 6.83544 6.4382 6.63663 6.63714C6.43782 6.83608 6.32353 7.10412 6.31762 7.38531C6.3117 7.6665 6.41462 7.93911 6.60489 8.14623L6.60389 8.14523L10.4584 11.9997L6.60389 15.8543C6.49544 15.9538 6.40825 16.0742 6.34756 16.2083C6.28687 16.3423 6.25393 16.4873 6.25074 16.6344C6.24755 16.7816 6.27417 16.9278 6.32899 17.0644C6.38382 17.201 6.46571 17.3251 6.56975 17.4292C6.67378 17.5333 6.7978 17.6153 6.93435 17.6702C7.0709 17.7251 7.21715 17.7518 7.36429 17.7487C7.51143 17.7456 7.65643 17.7128 7.79055 17.6522C7.92467 17.5916 8.04513 17.5045 8.1447 17.3961L8.1457 17.3951L12.0002 13.5406L15.8547 17.3951C15.9542 17.5035 16.0746 17.5907 16.2087 17.6514C16.3428 17.7121 16.4878 17.745 16.6349 17.7482C16.7821 17.7514 16.9283 17.7248 17.0649 17.67C17.2015 17.6151 17.3256 17.5333 17.4297 17.4292C17.5338 17.3252 17.6157 17.2012 17.6707 17.0646C17.7256 16.9281 17.7523 16.7818 17.7492 16.6347C17.7461 16.4875 17.7133 16.3425 17.6526 16.2084C17.592 16.0743 17.5049 15.9538 17.3965 15.8543L17.3955 15.8533L13.541 12.0007Z"
+                            fill="black" />
+                    </svg>
+                </button></a>
+        </div>
+
+        <div class="container">
+
+            <form action="" method="get" id="frm_" name="frm_" enctype="multipart/form-data"></form>
+
+            <br>
+            <div class="row">
+                <input type="number" id="id_promo" name="id_promo" hidden>
+                <div class="col-xxl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <table id="table" class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th hidden scope="row" data-field="id" data-editable="true">Id</th>
+                                            <th scope="row" data-field="id" data-editable="true">Equipamento</th>
+                                            <th scope="row" data-field="fullname" data-editable="true">Nº Série
+                                            </th>
+                                            <th scope="row" data-field="email" data-editable="true">Patrimônio</th>
+                                            <th scope="row" data-field="telefone" data-editable="true">Observação
+                                            </th>
+                                            <th scope="row" data-field="cpf" data-editable="true">Devolução</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="visualizarDados">
+                                        {{#each equipamentos}}
+                                        <tr class="trtabela">
+                                            <td></td>
+                                            <td hidden>{{peripherals_id}}</td>
+                                            <td>{{nome_equipamento}}</td>
+                                            <td>{{serial}}</td>
+                                            <td>{{patrimonio}}</td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <label class="custom-checkbox">
+                                                    <input type="checkbox" class="hidden-checkbox" disabled {{#if
+                                                        is_defeito}}checked{{/if}} />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <label class="custom-checkbox">
+                                                    <input type="checkbox" class="hidden-checkbox" disabled {{#if
+                                                        is_ndev}}checked{{/if}} />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <button id="btnRedirecionar" class="btn btn-primary" style="display: none;"
+                                    onclick="redirecionar()">Redirecionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+    src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.js"></script>
+
+<script>
+
+    function Ganhador(ids) {
+        const teste = document.getElementById(ids);
+        console.log(teste);
+        document.getElementById('id_participacao').value = teste.id;
+    };
+
+
+
+    var tablevlr = $('#table').DataTable({
+        //Agrupa os resultados
+        // rowGroup:
+        // {
+        // dataSrc: 'group'
+        // },
+        //permite a seleção de itens da tabela precionando o ctr mais a linha desejada
+        select: true,
+        //Habilita ou Desabilita a paginação da pagina
+        paging: false,
+        //Habilita a rolagem da tabela e tipo o tamanho da tela para rolagem pode colocar entre 100 a 400 que fica ok
+        //Use esse ou o Paging para listar os itens
+        scrollY: 200,
+        "scrollCollapse": true,
+        "scrollX": true,
+        //desabilita a pesquisa diretamente na pagina
+        searching: false,
+        //habilita ou desabilita a ordenação das informações
+        ordering: true,
+        //aqui estou traduzindo alguns campos da planilha para portugues
+        language: {
+            "sEmptyTable": "Nenhum registro encontrado",
+            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ".",
+            "sLengthMenu": "_MENU_ resultados por página",
+            "sLoadingRecords": "Carregando...",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sSearch": "Pesquisar",
+            "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+            },
+            "oAria": {
+                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                "sSortDescending": ": Ordenar colunas de forma descendente"
+            },
+            "select": {
+                "rows": {
+                    "_": "Selecionado %d linhas",
+                    "0": "Nenhuma linha selecionada",
+                    "1": "Selecionado 1 linha"
+                }
+            },
+            "buttons": {
+                "copy": "Copiar para a área de transferência",
+                "copyTitle": "Cópia bem sucedida",
+                "copySuccess": {
+                    "1": "Uma linha copiada com sucesso",
+                    "_": "%d linhas copiadas com sucesso"
+                }
+            }
+        },
+        //Adicionando botões
+        buttons: [
+            //comando para gerar os botões de selecionar todos e descelecionar
+            // 'selectAll',
+            // 'selectNone',
+            //Botões para seleção das celulas
+            // 'selectRows',
+            // 'selectColumns',
+            // 'selectCells',
+            {
+                //Gera uma collection para agrupar todos os botões em um unico local
+                extend: 'collection',
+                text: '<span class="material-icons">archive</span>',
+                //define os botões que serão agrupados
+                buttons: [
+
+                    //copia da tabela exibida para a area de transferencia
+                    {
+                        extend: 'copy',
+                        text: 'Copiar',
+                        title: 'Resultado da consulta',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        key: {
+                            key: 'c',
+                            altkey: true
+                        }
+                    },
+                    //gera o arquivo no formato xlsx
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        title: 'Resultado da consulta',
+                        key: {
+                            key: 'e',
+                            altkey: true
+                        }
+                    },
+                    {
+                        //gera um arquivo csv
+                        extend: 'csv',
+                        //inseri atributos do botão https://datatables.net/reference/option/buttons.buttons.attr
+                        attr:
+                        {
+                            id: 'csv',
+                            role: 'tooltip'
+                        },
+                        //Altero o texto e formato a primeira letra para maiuscula
+                        text: 'CSV',
+                        //Modifico o titulo da impressão
+                        title: 'Resultado da consulta',
+                        //opção para imprimir somente o que estiver visivel na planilha conciliado com o parametro colvis
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        key: {
+                            key: 'I',
+                            altkey: true
+                        }
+                    },
+                    //gera o pdf da tabela para impressão
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        title: 'Resultado da consulta',
+                        orientation: 'landscape',
+                        key: {
+                            key: 'p',
+                            altkey: true
+                        }
+                    },
+                    //Exporta a cosnulta em formato Json
+                    {
+                        text: 'JSON',
+                        action: function (e, dt, button, config) {
+                            var data = dt.buttons.exportData();
+
+                            $.fn.dataTable.fileSave(
+                                new Blob([JSON.stringify(data)]),
+                                'Export.json'
+                            );
+                        }
+                    }
+                ],
+                dropup: true
+            },
+            //botão para imprimir a tabela toda, formato abaixo e para traduzir os botões
+            {
+                //informa que vamos extender de um botão conhecido
+                extend: 'print',
+                //inseri atributos do botão https://datatables.net/reference/option/buttons.buttons.attr
+                attr:
+                {
+                    id: 'print',
+                    role: 'tooltip'
+                },
+                //Altero o texto e formato a primeira letra para maiuscula
+                text: '<span class="material-icons">print</span>',
+                //Modifico o titulo da impressão
+                title: 'Resultado da consulta',
+                //opção para imprimir somente o que estiver visivel na planilha conciliado com o parametro colvis
+                exportOptions: {
+                    columns: ':visible'
+                },
+                key: {
+                    key: 'I',
+                    altkey: true
+                }
+            },
+            //usado para selecionar quais campos serão exibidos ou não na tabela
+            {
+                extend: 'colvis',
+                text: '<span class="material-icons">view_module</span>',
+                title: 'Resultado da consulta',
+                key: {
+                    key: 'c',
+                    altkey: true
+                }
+            }
+            //define a exibição das colunas https://datatables.net/reference/button/columnToggle melhor usar o colvis
+            // {
+            // extend: 'columnToggle',
+            // columns: 1
+            // }
+        ],
+        //resosividade da tela (+)
+        responsive: false,
+        columnDefs: [{
+            targets: 0,
+            visible: false
+        }],
+        //complemento da configuração dos botões
+        dom: 'Bfrtip',
+
+        // fim da table
+    });
+
+    //fim da função
+
+    function goBack() {
+        window.history.back(-1)
+    }
+
+    //selecionar item para imprimir nota 
+    var tabela = document.getElementById("table");
+    var linhas = tabela.getElementsByTagName("tr");
+
+    for (var i = 0; i < linhas.length; i++) {
+        var linha = linhas[i];
+        linha.addEventListener("click", function () {
+            //Adicionar ao atual
+            selLinha(this, false); //Selecione apenas um
+            //selLinha(this, true); //Selecione quantos quiser
+        });
+    }
+
+    /**
+    Caso passe true, você pode selecionar multiplas linhas.
+    Caso passe false, você só pode selecionar uma linha por vez.
+    **/
+    function selLinha(linha, multiplos) {
+        if (!multiplos) {
+            var linhas = linha.parentElement.getElementsByTagName("tr");
+            for (var i = 0; i < linhas.length; i++) {
+                var linha_ = linhas[i];
+                linha_.classList.remove("selecionado");
+            }
+        }
+        linha.classList.toggle("selecionado");
+    }
+
+    /**
+    Exemplo de como capturar os dados
+    **/
+    var btnVisualizar = document.getElementById("visualizarDados");
+
+    //modelo para pegar tr tabela 
+    function lido() {
+        var tabela = document.getElementById("table");
+        var coluna = tabela.getElementsByTagName("td");
+        var linha = tabela.getElementsByTagName("tr");
+
+        if (coluna[8].innerHTML == "Sim") {
+            //console.log(linha)
+            linha.style.backgroundColor = 'yellow'
+        } else {
+            //console.log('errado')
+        }
+    }
+
+    btnVisualizar.addEventListener("click", function () {
+        var selecionados = tabela.getElementsByClassName("selecionado");
+        //Verificar se está selecionado
+        if (selecionados.length < 1) {
+            alert("Selecione pelo menos uma linha");
+            return false;
+        }
+
+        var dados = "";
+
+        for (var i = 0; i < selecionados.length; i++) {
+            var selecionado = selecionados[i];
+            selecionado = selecionado.getElementsByTagName("td");
+
+            var rota = "/links/consultas/conserto/"
+            var rota2 = document.getElementById('id_promo').value = selecionado[0].innerHTML
+
+            console.log("idparticipante");
+            console.log(rota2);
+
+            document.frm_.action = `${rota} ${rota2}`;
+            document.frm_.submit();
+        }
+    });
+
+</script>

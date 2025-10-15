@@ -1,0 +1,423 @@
+<div id="divpdf">
+
+    <div class="container" id="containerpdf" name="containerpdf">
+        <div class="mb-3">
+            <div class="col-xxl">
+                <div class="card">
+                    <div class="form-group">
+
+                        <font face="DM Sans, Arial, system-ui">
+                            <table style="border-collapse: collapse; width: 100%;">
+
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">
+                                        <img src="https://escala.itatiaia.com.br/img/lg1.png"
+                                            alt="Logo da rádio Itatiaia" width="250px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center; font-size: 22px;">
+                                        CNPJ: 17.270.950/0001-39
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center; font-size: 22px;">
+                                        Rádio Itatiaia Setor Externa
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center; font-size: 22px;">
+                                        Lista de Saída de Equipamentos Jornadas Externas
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                                {{#each operador}}
+                                <tr style="border: 1px solid black;">
+                                    <td
+                                        style="width:500px; padding-left: 10px; padding-right: 10px; border-right: 1px solid black;">
+                                        <b>Evento:</b> {{local}}
+                                    </td>
+                                    <td style="width:500px; padding-left: 10px; padding-right: 10px;">
+                                        <b>Endereço:</b> {{endereco}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                                <tr style="border: 1px solid black;">
+                                    {{#each usuarios}}
+                                    <td
+                                        style="width:500px; padding-left: 10px; padding-right: 10px; border-right: 1px solid black;">
+                                        <b>Técnico:</b> {{full_name}}
+                                    </td>
+                                    {{/each}}
+
+                                    {{#each operador}}
+                                    <td style="width:500px; padding-left: 10px; padding-right: 10px;">
+                                        <b>Data:</b> {{dt_inicio}} á {{dt_fim}}
+                                    </td>
+                                    {{/each}}
+                                </tr>
+
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table style="border-collapse: collapse; width: 100%;">
+                                <tr style="border: 1px solid black;">
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; border: 1px solid black; text-align: center; font-weight: bold;">
+                                        Equipamentos
+                                    </td>
+                                    <td
+                                        style="width:200px; padding-left: 10px; padding-right: 10px; border: 1px solid black; text-align: center; font-weight: bold;">
+                                        Patrimônio
+                                    </td>
+                                    <td
+                                        style="width:200px; padding-left: 10px; padding-right: 10px; border: 1px solid black; text-align: center; font-weight: bold;">
+                                        Nº Série
+                                    </td>
+                                </tr>
+
+                                {{#each equipamentos}}
+                                <tr style="border: 1px solid black;">
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; border: 1px solid black;">
+                                        {{name}}
+                                    </td>
+                                    <td
+                                        style="width:200px; padding-left: 10px; padding-right: 10px; text-align: center; border: 1px solid black;">
+                                        {{otherserial}}
+                                    </td>
+                                    <td
+                                        style="width:200px; padding-left: 10px; padding-right: 10px; text-align: center; border: 1px solid black;">
+                                        {{serial}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+
+
+                            <p></p>
+
+                            <table>
+                                <tr>
+                                    <td style="width:900px; padding-left: 10px; padding-right: 10px; text-align: left;">
+                                        Rádio Itatiaia S.A
+                                    </td>
+                                    {{#each usuarios}}
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; text-align: right;">
+                                        Belo Horizonte {{dt_rodape}}
+                                    </td>
+                                    {{/each}}
+
+                                </tr>
+                                <tr>
+                                    <td style="width:900px; padding-left: 10px; padding-right: 10px; text-align: left;">
+                                        CNPJ: 17.270.950/0001-39
+                                    </td>
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; text-align: right;">
+                                        E-mail: judsonporto@itatiaia.com.br
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:900px; padding-left: 10px; padding-right: 10px; text-align: left;">
+                                        Telefone(s) +55 (31) 2105-3542
+                                    </td>
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; text-align: right;">
+                                        E-mail: luciomar@itatiaia.com.br
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:900px; padding-left: 10px; padding-right: 10px; text-align: left;">
+                                        Avenida Barão Homem De Melo, 2222
+                                    </td>
+                                    <td
+                                        style="width:900px; padding-left: 10px; padding-right: 10px; text-align: right;">
+                                        Estoril, Belo Horizonte - MG, CEP:30494-080
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="generatePdfButton" class="btn btn-danger">Gerar PDF</button>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+    src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.js"></script>
+
+{{!-- Script para a 2 linha da tabela (pesquisa) --}}
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+<script>
+    // Função para gerar o PDF
+    document.getElementById('generatePdfButton').addEventListener('click', async () => {
+        const divHTML = document.getElementById('divpdf').innerHTML;
+
+        // Repassa os dados ao servidor
+        const response = await fetch('/links/consultas/lista_pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                layoutpdf: divHTML
+            })
+        });
+
+        // Armazena o BLOB e repassa à URL
+        const pdfBlob = await response.blob();
+        const url = window.URL.createObjectURL(pdfBlob);
+
+        // Abre o PDF em uma aba secundária
+        window.open(url, '_blank');
+
+        // Redireciona o gestor ao profile
+        window.location.href = '/profile';
+    });
+</script>
+
+<script>
+    $('#table').DataTable({
+        //Agrupa os resultados
+        // rowGroup:
+        // {
+        // dataSrc: 'group'
+        // },
+        //permite a seleção de itens da tabela precionando o ctr mais a linha desejada
+        select: true,
+        //Habilita ou Desabilita a paginação da pagina
+        paging: false,
+        //Habilita a rolagem da tabela e tipo o tamanho da tela para rolagem pode colocar entre 100 a 400 que fica ok
+        //Use esse ou o Paging para listar os itens
+        scrollY: 370,
+        "scrollCollapse": true,
+        "scrollX": true,
+        //desabilita a pesquisa diretamente na pagina
+        searching: false,
+        //habilita ou desabilita a ordenação das informações
+        ordering: true,
+
+        //aqui estou traduzindo alguns campos da planilha para portugues
+        language: {
+            "sEmptyTable": "Nenhum registro encontrado",
+            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ".",
+            "sLengthMenu": "_MENU_ resultados por página",
+            "sLoadingRecords": "Carregando...",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sSearch": "Pesquisar",
+            "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+            },
+            "oAria": {
+                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                "sSortDescending": ": Ordenar colunas de forma descendente"
+            },
+            "select": {
+                "rows": {
+                    "_": "Selecionado %d linhas",
+                    "0": "Nenhuma linha selecionada",
+                    "1": "Selecionado 1 linha"
+                }
+            },
+            "buttons": {
+                "copy": "Copiar para a área de transferência",
+                "copyTitle": "Cópia bem sucedida",
+                "copySuccess": {
+                    "1": "Uma linha copiada com sucesso",
+                    "_": "%d linhas copiadas com sucesso"
+                }
+            }
+        },
+        //Adicionando botões
+        buttons: [
+            //comando para gerar os botões de selecionar todos e descelecionar
+            // 'selectAll',
+            // 'selectNone',
+            //Botões para seleção das celulas
+            // 'selectRows',
+            // 'selectColumns',
+            // 'selectCells',
+
+            {
+                //Gera uma collection para agrupar todos os botões em um unico local
+                extend: 'collection',
+                text: '<span class="material-icons">archive</span>',
+                //define os botões que serão agrupados
+                buttons: [
+
+                    //copia da tabela exibida para a area de transferencia
+                    {
+                        extend: 'copy',
+                        text: 'Copiar',
+                        title: 'Resultado da consulta',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        key: {
+                            key: 'c',
+                            altkey: true
+                        }
+                    },
+                    //gera o arquivo no formato xlsx
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        title: 'Resultado da consulta',
+                        key: {
+                            key: 'e',
+                            altkey: true
+                        }
+                    },
+                    {
+                        //gera um arquivo csv
+                        extend: 'csv',
+                        //inseri atributos do botão https://datatables.net/reference/option/buttons.buttons.attr
+                        attr:
+                        {
+                            id: 'csv',
+                            role: 'tooltip'
+                        },
+                        //Altero o texto e formato a primeira letra para maiuscula
+                        text: 'CSV',
+                        //Modifico o titulo da impressão
+                        title: 'Resultado da consulta',
+                        //opção para imprimir somente o que estiver visivel na planilha conciliado com o parametro colvis
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        key: {
+                            key: 'I',
+                            altkey: true
+                        }
+                    },
+                    //gera o pdf da tabela para impressão
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        title: 'Resultado da consulta',
+                        orientation: 'landscape',
+                        key: {
+                            key: 'p',
+                            altkey: true
+                        }
+                    },
+                    //Exporta a cosnulta em formato Json
+                    {
+                        text: 'JSON',
+                        action: function (e, dt, button, config) {
+                            var data = dt.buttons.exportData();
+
+                            $.fn.dataTable.fileSave(
+                                new Blob([JSON.stringify(data)]),
+                                'Export.json'
+                            );
+                        }
+                    }
+                ],
+                dropup: true
+            },
+            //botão para imprimir a tabela toda, formato abaixo e para traduzir os botões
+            {
+                //informa que vamos extender de um botão conhecido
+                extend: 'print',
+                //inseri atributos do botão https://datatables.net/reference/option/buttons.buttons.attr
+                attr:
+                {
+                    id: 'print',
+                    role: 'tooltip'
+                },
+                //Altero o texto e formato a primeira letra para maiuscula
+                text: '<span class="material-icons">print</span>',
+                //Modifico o titulo da impressão
+                title: 'Resultado da consulta',
+                //opção para imprimir somente o que estiver visivel na planilha conciliado com o parametro colvis
+                exportOptions: {
+                    columns: ':visible'
+                },
+                key: {
+                    key: 'I',
+                    altkey: true
+                }
+            },
+            //usado para selecionar quais campos serão exibidos ou não na tabela
+            {
+                extend: 'colvis',
+                text: '<span class="material-icons">view_module</span>',
+                title: 'Resultado da consulta',
+                key: {
+                    key: 'c',
+                    altkey: true
+                }
+            }
+            //define a exibição das colunas https://datatables.net/reference/button/columnToggle melhor usar o colvis
+            // {
+            // extend: 'columnToggle',
+            // columns: 1
+            // }
+        ],
+        //resosividade da tela (+)
+        responsive: false,
+        columnDefs: [{
+            targets: 0,
+            visible: false
+        }],
+        //complemento da configuração dos botões
+        dom: 'Bfrtip',
+
+        orderCellsTop: true,
+        fixedHeader: true,
+        // fim da table
+    });
+
+    // Função para repassar a data dos inputs para a escala
+    const aux = document.querySelectorAll('[class="datas"]')
+    document.getElementById('datepdf').value = aux[0].value
+
+    aux.forEach((e) => {
+        const elArray = document.querySelectorAll(`[class="${e.value}"]`)
+        console.log(elArray)
+
+        // exibe as datas no DOM
+        elArray.forEach((element) => {
+            document.getElementById(e.value).appendChild(element)
+        })
+    });
+</script>

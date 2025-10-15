@@ -1,0 +1,134 @@
+<style>
+    .modal {
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-conteudo {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .modal-botoes button {
+        margin: 10px;
+    }
+
+    .botaoPerigo {
+        background-color: #dc3545;
+        /* vermelho bootstrap */
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .botaoPerigo:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<body>
+
+    <div class="boxH1ResPadraoDesktop">
+        <div class="mesPremiadoPadraoDesktop">
+            <h1 class="h1ResPadraoDesktop">Vinculação de Funcionário</h1>
+        </div>
+        <a href="../../../profile"> <button class="svgXSairTabelas" data-placement="bottom" onclick="goBack()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M13.541 12.0007L17.3955 8.14623C17.5857 7.93898 17.6884 7.66631 17.6823 7.38512C17.6762 7.10394 17.5618 6.83597 17.3628 6.63716C17.1639 6.43835 16.8958 6.32406 16.6147 6.31815C16.3335 6.31223 16.0609 6.41515 15.8537 6.60542L15.8547 6.60442L12.0002 10.4589L8.1457 6.60442C7.93845 6.41429 7.66578 6.31154 7.38459 6.31764C7.10341 6.32374 6.83544 6.4382 6.63663 6.63714C6.43782 6.83608 6.32353 7.10412 6.31762 7.38531C6.3117 7.6665 6.41462 7.93911 6.60489 8.14623L6.60389 8.14523L10.4584 11.9997L6.60389 15.8543C6.49544 15.9538 6.40825 16.0742 6.34756 16.2083C6.28687 16.3423 6.25393 16.4873 6.25074 16.6344C6.24755 16.7816 6.27417 16.9278 6.32899 17.0644C6.38382 17.201 6.46571 17.3251 6.56975 17.4292C6.67378 17.5333 6.7978 17.6153 6.93435 17.6702C7.0709 17.7251 7.21715 17.7518 7.36429 17.7487C7.51143 17.7456 7.65643 17.7128 7.79055 17.6522C7.92467 17.5916 8.04513 17.5045 8.1447 17.3961L8.1457 17.3951L12.0002 13.5406L15.8547 17.3951C15.9542 17.5035 16.0746 17.5907 16.2087 17.6514C16.3428 17.7121 16.4878 17.745 16.6349 17.7482C16.7821 17.7514 16.9283 17.7248 17.0649 17.67C17.2015 17.6151 17.3256 17.5333 17.4297 17.4292C17.5338 17.3252 17.6157 17.2012 17.6707 17.0646C17.7256 16.9281 17.7523 16.7818 17.7492 16.6347C17.7461 16.4875 17.7133 16.3425 17.6526 16.2084C17.592 16.0743 17.5049 15.9538 17.3965 15.8543L17.3955 15.8533L13.541 12.0007Z"
+                        fill="black" />
+                </svg>
+            </button></a>
+    </div>
+    <form action="/links/editar/editar_vinculo/{{vinculo.id_vinculo}}" method="POST">
+        <div class="grupoGap48pxDesktopCadastro">
+            <div class="grupoGap40px">
+                <div class="grupoGap24px">
+                    <div class="grupoGap8pxDesktop">
+
+                        <!-- Nome fixo do funcionário -->
+                        <p class="textoInputPadraoDesktop">Funcionário</p>
+                        <input class="form-control inputPadraoDesktop" type="text" value="{{vinculo.nome_funcionario}}"
+                            disabled>
+
+                        <!-- Campo oculto com ID do funcionário -->
+                        <input type="hidden" name="funcionario" value="{{vinculo.id_funcionario}}">
+
+                        <!-- Select para Setor -->
+                        <p class="textoInputPadraoDesktop">Setor do Funcionário</p>
+                        <select class="form-select inputPadraoDesktop" name="setor" id="setor" required>
+                            <option disabled hidden>Selecione o Setor</option>
+                            {{#each setores}}
+                            <option value="{{id}}" data-id="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="botaoPadraoDesktop" id="submit">Atualizar</button>
+                    <button type="button" class="botaoPerigo" onclick="abrirModalExclusao('{{vinculo.id_vinculo}}')">
+                        Excluir
+                    </button>
+
+                    <!-- Modal de confirmação -->
+                    <div id="modalExclusao" class="modal" style="display: none;">
+                        <div class="modal-conteudo">
+                            <p>Tem certeza que deseja excluir este vínculo?</p>
+                            <div class="modal-botoes">
+                                <button onclick="fecharModal()">Cancelar</button>
+                                <button id="confirmarExclusaoBtn" class="botaoPerigo">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const setorSelect = document.getElementById('setor');
+        const setorAtual = '{{vinculo.id_setor}}';
+
+        if (setorSelect) {
+            [...setorSelect.options].forEach(option => {
+                if (option.value == setorAtual) {
+                    option.selected = true;
+                }
+            });
+        }
+    });
+
+    function abrirModalExclusao(idVinculo) {
+        const modal = document.getElementById('modalExclusao');
+        modal.style.display = 'flex';
+
+        // Define a ação do botão confirmar
+        document.getElementById('confirmarExclusaoBtn').onclick = function () {
+            window.location.href = `/links/editar/excluir_vinculo/${idVinculo}`;
+        };
+    }
+
+    function fecharModal() {
+        document.getElementById('modalExclusao').style.display = 'none';
+    }
+</script>

@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<body>
+  <form action="/links/cadastros/cadastro_colaborador" method="POST">
+
+    <div class="grupoGap48pxDesktopCadastro">
+
+      <div class="grupoGap40px">
+        <div class="grupoGap24px">
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Colaborador </p>
+            <input type="text" name="nome" id="nome" class="inputPadraoDesktop" autofocus required>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Tipo de Contrato </p>
+            <select class="inputPadraoDesktop" name="tipo_contrato_id" id="tipo_contrato_id" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione Tipo de Contrato</option>
+              {{#each contrato}}
+              <option id="{{id}}" value="{{id}}"> {{nome}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Localização </p>
+            <select class="inputPadraoDesktop" name="localizacao_id" id="localizacao_id" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione a Localização</option>
+              {{#each localizacao}}
+              <option id="{{id}}" value="{{id}}"> {{nome}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Origem Da Posição </p>
+            <select class="inputPadraoDesktop" name="origem" id="origem" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione a Origem Da Posição</option>              
+              <option value="1"> 	NOVA VAGA 2021	</option>
+              <option value="2"> 	NOVA VAGA 2022	</option>
+              <option value="3"> 	NOVA VAGA 2023	</option>
+              <option value="4"> 	NOVA VAGA 2024	</option>
+              <option value="5"> 	NOVA VAGA 2025	</option>
+              <option value="6"> 	NOVA VAGA 2026	</option>
+              <option value="7"> 	PRESENTE EM 05/2021	</option>
+              <option value="8"> 	SUBSTITUICAO	</option>              
+              <option value="9"> 	TRANSFERENCIA	</option>
+              <option value="10"> 	VAGA TEMPORARIA	</option>
+              
+            </select>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Área </p>
+            <select class="inputPadraoDesktop" name="area_id" id="area_id" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione a Área</option>
+              {{#each area}}
+              <option id="{{area_id}}" value="{{area_id}}"> {{area_id}} - {{nome_final}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Posição </p>
+            <select class="inputPadraoDesktop" name="cargo_id" id="cargo_id" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione a Posição</option>
+              {{#each cargo}}
+              <option id="{{id}}" value="{{id}}"> {{nome}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Data Início </p>
+            <input type="date" name="data_inicio" id="data_inicio" class="inputPadraoDesktop" autofocus required>
+          </div>
+
+        <button class="botaoPadraoDesktop" onclick="valida()"> Cadastrar </button>
+
+      </div>
+  </form>
+
+</body>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  function valida() {
+    const full = document.getElementById('contrato');    
+
+    if (full.value == "") {
+      alert("O campo Colaborador não pode estar vazio.");
+      full.focus();
+      return false;
+    };
+    
+  }
+</script>

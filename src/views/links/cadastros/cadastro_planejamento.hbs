@@ -1,0 +1,376 @@
+<style>
+  .textarea-autoexpand {
+    min-height: 40px;
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  .grupoCheckboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .checkboxItem {
+    flex: 1 1 200px;
+  }
+
+  .textarea-centralizado {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .textarea-observacoes {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .container-centralizado {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .botao-pequeno {
+    padding: 5px 10px;
+    font-size: 14px;
+    width: auto;
+  }
+
+  .selecao-pequena {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .item-lista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .botoes-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<body>
+  <div class="container-centralizado">
+    <form action="/links/cadastros/cadastroPlanejamentoPost/{{evento.id}}" method="POST" onsubmit="return valida();">
+      <div class="text-center mt-3 mb-4">
+        <h2>{{evento.titulo}}</h2>
+        {{#if setor}}
+        <h3 class="mt-2">{{setor.name}}</h3>
+        <input type="hidden" name="id_setor" value="{{setor.id}}">
+        {{else}}
+        <div class="alert alert-warning">Setor não definido</div>
+        {{/if}}
+      </div>
+
+      <!-- Bloco Único de Planejamento -->
+      <div id="blocoUnico" class="p-4 border rounded mb-4">
+        <!-- Funcionários -->
+        <div class="grupoGap8pxDesktop text-center">
+          <p class="textoInputPadraoDesktop">Funcionários</p>
+          <div class="botoes-container">
+            <button type="button" class="botaoPadraoDesktop botao-pequeno" onclick="adicionarFuncionario()">
+              <i class="fas fa-user-plus"></i> Adicionar Funcionário
+            </button>
+          </div>
+          <div class="listaFuncionarios mt-2"></div>
+        </div>
+
+        {{#if ehRadio}}
+        <div class="grupoGap8pxDesktop text-center mt-4">
+          <p class="textoInputPadraoDesktop">Conteúdo</p>
+          <div class="botoes-container">
+            <button type="button" class="botaoPadraoDesktop botao-pequeno" onclick="adicionarConteudo()">
+              <i class="fas fa-plus-circle"></i> Adicionar Conteúdo
+            </button>
+          </div>
+          <div class="listaConteudos mt-2"></div>
+        </div>
+        {{else}}
+        <div class="grupoGap8pxDesktop mt-4">
+          <p class="textoInputPadraoDesktop text-center">Conteúdo</p>
+          <textarea name="conteudo_radio"
+            class="inputPadraoDesktop textarea-autoexpand textarea-centralizado"></textarea>
+        </div>
+        {{/if}}
+
+        <!-- Producao -->
+        <div class="grupoGap8pxDesktop mt-4">
+          <p class="textoInputPadraoDesktop text-center">Produção</p>
+          <textarea name="producao" class="inputPadraoDesktop textarea-autoexpand textarea-centralizado"></textarea>
+        </div>
+
+        <!-- Escala -->
+        <div class="grupoGap8pxDesktop mt-4">
+          <p class="textoInputPadraoDesktop text-center">Escala</p>
+          <textarea name="escala" class="inputPadraoDesktop textarea-autoexpand textarea-centralizado"></textarea>
+        </div>
+
+        <!-- Logística -->
+        <div class="grupoGap8pxDesktop mt-4">
+          <p class="textoInputPadraoDesktop text-center">Logística</p>
+          <textarea name="logistica" class="inputPadraoDesktop textarea-autoexpand textarea-centralizado"></textarea>
+        </div>
+
+        <!-- Outros -->
+        <div class="grupoGap8pxDesktop mt-4">
+          <p class="textoInputPadraoDesktop text-center">Outros</p>
+          <textarea name="outros" class="inputPadraoDesktop textarea-autoexpand textarea-centralizado"></textarea>
+        </div>
+      </div>
+
+      <!-- Botão de Enviar -->
+      <div class="d-flex justify-content-center my-4">
+        <button type="submit" class="botaoPadraoDesktop">Cadastrar Planejamento</button>
+      </div>
+    </form>
+  </div>
+</body>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>
+  const funcionarios = {{{ funcionarios }}};
+  const programas = {{{ programas }}};
+  const ehRadio = {{{ ehRadio }}}
+  const ehVideo = {{{ ehVideo}}}
+
+  function adicionarFuncionario() {
+    const lista = document.querySelector('.listaFuncionarios');
+    const maxFuncionarios = 10;
+
+    if (lista.childElementCount >= maxFuncionarios) {
+      alert("Máximo de 10 funcionários.");
+      return;
+    }
+
+    const container = document.createElement('div');
+    container.className = "item-lista mb-2 position-relative";
+
+    const input = document.createElement('input');
+    input.type = "text";
+    input.name = "funcionarios_nomes[]";
+    input.className = "form-control funcionario-autocomplete";
+    input.placeholder = "Digite o nome do funcionário";
+    input.setAttribute("autocomplete", "off");
+    input.required = true;
+
+    const datalist = document.createElement('ul');
+    datalist.className = "autocomplete-list list-group position-absolute w-100";
+    datalist.style.top = "100%"; // exibe abaixo do input
+    datalist.style.zIndex = "1000";
+    datalist.style.maxHeight = "150px";
+    datalist.style.overflowY = "auto";
+    datalist.hidden = true;
+
+    input.addEventListener('input', () => {
+      const valor = input.value.toLowerCase();
+      datalist.innerHTML = '';
+      if (valor.length === 0) {
+        datalist.hidden = true;
+        return;
+      }
+
+      // Lista nomes já usados
+      const usados = Array.from(document.querySelectorAll('input[name="funcionarios_nomes[]"]'))
+        .filter(el => el !== input)
+        .map(el => el.value.trim().toLowerCase());
+
+      const resultados = funcionarios.filter(f =>
+        f.name.toLowerCase().includes(valor) && !usados.includes(f.name.toLowerCase())
+      );
+
+      if (resultados.length === 0) {
+        datalist.hidden = true;
+        return;
+      }
+
+      resultados.forEach(f => {
+        const item = document.createElement('li');
+        item.textContent = f.name;
+        item.className = "list-group-item list-group-item-action";
+        item.onclick = () => {
+          input.value = f.name;
+          datalist.hidden = true;
+
+          // cria/atualiza um hidden input com o id do funcionário
+          let hidden = container.querySelector('input[name="funcionarios_ids[]"]');
+          if (!hidden) {
+            hidden = document.createElement('input');
+            hidden.type = "hidden";
+            hidden.name = "funcionarios_ids[]";
+            container.appendChild(hidden);
+          }
+          hidden.value = f.id;
+        };
+        datalist.appendChild(item);
+      });
+
+      datalist.hidden = false;
+    });
+
+    document.addEventListener('click', e => {
+      if (!container.contains(e.target)) {
+        datalist.hidden = true;
+      }
+    });
+
+    const botaoRemover = document.createElement('button');
+    botaoRemover.type = "button";
+    botaoRemover.innerHTML = '<i class="fas fa-trash-alt"></i> Remover';
+    botaoRemover.className = "btn btn-danger btn-sm mt-1";
+    botaoRemover.onclick = () => container.remove();
+
+    container.appendChild(input);
+    container.appendChild(datalist);
+    container.appendChild(botaoRemover);
+    lista.appendChild(container);
+  }
+
+  function adicionarConteudo() {
+    const lista = document.querySelector('.listaConteudos');
+    const maxConteudos = 12;
+
+    if (lista.childElementCount >= maxConteudos) {
+      alert("Máximo de 12 conteúdos.");
+      return;
+    }
+
+    const container = document.createElement('div');
+    container.className = "item-lista mb-2 position-relative";
+
+    const input = document.createElement('input');
+    input.type = "text";
+    input.name = "programas_nomes[]";
+    input.className = "form-control programa-autocomplete";
+    input.placeholder = "Digite o nome do programa";
+    input.setAttribute("autocomplete", "off");
+    input.required = true;
+
+    const datalist = document.createElement('ul');
+    datalist.className = "autocomplete-list list-group position-absolute w-100";
+    datalist.style.top = "100%";
+    datalist.style.zIndex = "1000";
+    datalist.style.maxHeight = "150px";
+    datalist.style.overflowY = "auto";
+    datalist.hidden = true;
+
+    input.addEventListener('input', () => {
+      const valor = input.value.toLowerCase();
+      datalist.innerHTML = '';
+      if (valor.length === 0) {
+        datalist.hidden = true;
+        return;
+      }
+
+      const usados = Array.from(document.querySelectorAll('input[name="programas_nomes[]"]'))
+        .filter(el => el !== input)
+        .map(el => el.value.trim().toLowerCase());
+
+      const resultados = programas.filter(p =>
+        p.name.toLowerCase().includes(valor) && !usados.includes(p.name.toLowerCase())
+      );
+
+      if (resultados.length === 0) {
+        datalist.hidden = true;
+        return;
+      }
+
+resultados.forEach(p => {
+  const item = document.createElement('li');
+  item.textContent = p.name;
+  item.className = "list-group-item list-group-item-action";
+  item.onclick = () => {
+    input.value = p.name;
+    datalist.hidden = true;
+
+    let hidden = container.querySelector('input[name="programas_ids[]"]');
+    if (!hidden) {
+      hidden = document.createElement('input');
+      hidden.type = "hidden";
+      hidden.name = "programas_ids[]";
+      container.appendChild(hidden);
+    }
+    hidden.value = p.id;
+  };
+  datalist.appendChild(item);
+});
+
+      datalist.hidden = false;
+    });
+
+    document.addEventListener('click', e => {
+      if (!container.contains(e.target)) {
+        datalist.hidden = true;
+      }
+    });
+
+    const textarea = document.createElement('textarea');
+    textarea.name = `obs_programa[]`;
+    textarea.className = "form-control textarea-autoexpand textarea-observacoes mt-1";
+    textarea.placeholder = "Observações (opcional)";
+    textarea.style.minHeight = "30px";
+
+    const botaoRemover = document.createElement('button');
+    botaoRemover.type = "button";
+    botaoRemover.innerHTML = '<i class="fas fa-trash-alt"></i> Remover';
+    botaoRemover.className = "btn btn-sm btn-danger mt-1";
+    botaoRemover.onclick = () => container.remove();
+
+    container.appendChild(input);
+    container.appendChild(datalist);
+    container.appendChild(textarea);
+    container.appendChild(botaoRemover);
+
+    lista.appendChild(container);
+  }
+
+  // Autoexpand para textarea
+  document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('textarea-autoexpand')) {
+      e.target.style.height = 'auto';
+      e.target.style.height = (e.target.scrollHeight) + 'px';
+    }
+  });
+
+  function valida() {
+    const funcionarios = document.querySelectorAll('input[name="funcionarios_nomes[]"]');
+    const programas = document.querySelectorAll('input[name="programas_nomes[]"]');
+
+    if (funcionarios.length === 0 && !ehVideo ) {
+      alert("Adicione pelo menos um funcionário.");
+      return false;
+    }
+
+    if (ehRadio) {
+      if (programas.length === 0) {
+        alert("Adicione pelo menos um conteúdo.");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('textarea-autoexpand')) {
+      e.target.style.height = 'auto';
+      e.target.style.height = (e.target.scrollHeight) + 'px';
+    }
+  });
+</script>

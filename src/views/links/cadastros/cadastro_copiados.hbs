@@ -1,0 +1,171 @@
+<style>
+    .inputPadraoDesktopParticipar {
+        width: 100%;
+        height: auto;
+        min-height: 50px;
+        max-height: none;
+        overflow-y: hidden;
+    }
+</style>
+
+<body>
+    <div class="boxH1ResPadraoDesktop">
+        <div class="mesPremiadoPadraoDesktop">
+            <h1 class="h1ResPadraoDesktop">Cadastro Copiados</h1>
+        </div>
+        <a href="../../../profile">
+            <button class="svgXSairTabelas" data-placement="bottom" onclick="goBack()">
+                <!-- SVG aqui -->
+            </button>
+        </a>
+    </div><br>
+
+    <div class="form-group col-md-6 mx-auto">
+        <label for="searchFuncionario">Pesquisar Funcionário por Email</label>
+        <input type="text" id="searchFuncionario" class="form-control" placeholder="Digite o email do funcionário">
+        <ul id="suggestions" class="list-group" style="max-height: 200px; overflow-y: auto; display: none;"></ul>
+    </div>
+
+    <div class="container p-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <p><strong>Funcionários Selecionados</strong></p>
+                <table id="funcionariosSelecionados" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <button id="btnFinalizar" class="btn btn-success px-4 py-2">Finalizar e Atualizar Funcionários</button>
+    </div>
+
+    <script>
+        const funcionarios = {{{ funcionarios }}};
+        const idEvento = {{{ idEvento }}};
+        const selecionadosIniciais = {{{ selecionados }}};
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.querySelector('#searchFuncionario');
+            const suggestions = document.querySelector('#suggestions');
+            const tbody = document.querySelector('#funcionariosSelecionados tbody');
+            const selecionados = [];
+
+            function renderSuggestions(lista) {
+                suggestions.innerHTML = '';
+                lista.forEach(func => {
+                    const li = document.createElement('li');
+                    li.classList.add('list-group-item');
+                    li.textContent = `${func.nome} (${func.email})`;
+                    li.addEventListener('click', () => addFuncionario(func));
+                    suggestions.appendChild(li);
+                });
+                suggestions.style.display = lista.length ? 'block' : 'none';
+            }
+
+            function addFuncionario(func) {
+                if (!selecionados.find(f => f.id === func.id)) {
+                    selecionados.push(func);
+                    renderTabela();
+                }
+                input.value = '';
+                suggestions.style.display = 'none';
+            }
+
+            function removeFuncionario(func) {
+                const index = selecionados.findIndex(f => f.id === func.id);
+                if (index !== -1) {
+                    selecionados.splice(index, 1);
+                    renderTabela();
+                }
+            }
+
+            function renderTabela() {
+                tbody.innerHTML = '';
+                selecionados.forEach(func => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                    <td>${func.nome}</td>
+                    <td>${func.email}</td>
+                    <td><button class="btn btn-danger btn-sm">Remover</button></td>
+                `;
+                    tr.querySelector('button').addEventListener('click', () => removeFuncionario(func));
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Carrega os funcionários que já estavam selecionados ao abrir a página
+            if (Array.isArray(selecionadosIniciais)) {
+                selecionadosIniciais.forEach(func => {
+                    if (!selecionados.find(f => f.id === func.id)) {
+                        selecionados.push(func);
+                    }
+                });
+            }
+            renderTabela();
+
+            // Filtro de sugestões por nome ou email
+            input.addEventListener('input', () => {
+                const search = input.value.toLowerCase().trim();
+                const filtrados = funcionarios.filter(func =>
+                    !selecionados.some(s => s.id === func.id) &&
+                    (func.email.toLowerCase().includes(search) || func.nome.toLowerCase().includes(search))
+                );
+                renderSuggestions(filtrados);
+            });
+
+            // Oculta sugestões ao clicar fora
+            document.addEventListener('click', e => {
+                if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+                    suggestions.style.display = 'none';
+                }
+            });
+
+            // Envia os funcionários selecionados para o servidor
+            document.querySelector('#btnFinalizar').addEventListener('click', async () => {
+                if (selecionados.length === 0) {
+                    alert("Nenhum funcionário selecionado.");
+                    return;
+                }
+
+                const confirmacao = confirm("Deseja realmente salvar os funcionários selecionados?");
+                if (!confirmacao) return;
+
+                try {
+                    const response = await fetch('/links/cadastros/cadastrarEmailPost', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            idEvento: idEvento,
+                            funcionariosSelecionados: selecionados.map(f => f.id)
+                        })
+                    });
+
+                    const resultado = await response.json();
+
+                    if (resultado.sucesso) {
+                        alert("Funcionários adicionados com sucesso!");
+                        window.location.href = "/links/consultas/consulta_eventosIncompletos";
+                    } else {
+                        alert("Erro ao salvar os dados.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao enviar dados:", error);
+                    alert("Erro inesperado. Veja o console.");
+                }
+            });
+        });
+    </script>
+</body>

@@ -1,0 +1,554 @@
+<style>
+    span.disable-links {
+        pointer-events: none;
+    }
+</style>
+
+{{!-- layout menu participante --}}
+{{#if user.participante}}
+<div class="container">
+    <div class="row">
+        {{#each visuParticipante}}
+        {{#if secap}}
+        {{#if breve}}
+        <div class="">
+            <div class="promoativaBoxDesktop">
+
+                <div class="imagemPromoativaBoxDesktop">
+                    <input type="image" src="{{image}}" class="inputImagemPromoativaBoxDesktop">
+                </div>
+
+                <input hidden type="text" value="{{id_promo}}" name="id_promo" id="id_promo">
+
+                <div class="InformPromoativaBoxDesktop">
+                    <div class="grupoGap24pxNoWidhtDesktop">
+                        <div class="grupoGap8pxDesktop">
+
+                            <div class="grupoGap8pxCenterDesktop">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                    fill="none" class="yellowCircleDesktop">
+                                    <circle cx="8" cy="8" r="8" fill="#f1f525" />
+                                </svg>
+                                <p class="situaPromoativaBoxDesktop"> {{brevep}}</p>
+                            </div>
+
+                            <p class="nomePromoativaBoxDesktop">{{nome}}</p>
+
+                            <div class="grupoGap8pxCenterDesktop">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" class="calendarDesktop">
+                                    <path
+                                        d="M8 14C7.71667 14 7.479 13.904 7.287 13.712C7.095 13.52 6.99934 13.2827 7 13C7 12.7167 7.096 12.479 7.288 12.287C7.48 12.095 7.71734 11.9993 8 12C8.28334 12 8.521 12.096 8.713 12.288C8.905 12.48 9.00067 12.7173 9 13C9 13.2833 8.904 13.521 8.712 13.713C8.52 13.905 8.28267 14.0007 8 14ZM12 14C11.7167 14 11.479 13.904 11.287 13.712C11.095 13.52 10.9993 13.2827 11 13C11 12.7167 11.096 12.479 11.288 12.287C11.48 12.095 11.7173 11.9993 12 12C12.2833 12 12.521 12.096 12.713 12.288C12.905 12.48 13.0007 12.7173 13 13C13 13.2833 12.904 13.521 12.712 13.713C12.52 13.905 12.2827 14.0007 12 14ZM16 14C15.7167 14 15.479 13.904 15.287 13.712C15.095 13.52 14.9993 13.2827 15 13C15 12.7167 15.096 12.479 15.288 12.287C15.48 12.095 15.7173 11.9993 16 12C16.2833 12 16.521 12.096 16.713 12.288C16.905 12.48 17.0007 12.7173 17 13C17 13.2833 16.904 13.521 16.712 13.713C16.52 13.905 16.2827 14.0007 16 14ZM5 22C4.45 22 3.979 21.804 3.587 21.412C3.195 21.02 2.99934 20.5493 3 20V6C3 5.45 3.196 4.979 3.588 4.587C3.98 4.195 4.45067 3.99933 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.021 4.196 20.413 4.588C20.805 4.98 21.0007 5.45067 21 6V20C21 20.55 20.804 21.021 20.412 21.413C20.02 21.805 19.5493 22.0007 19 22H5ZM5 20H19V10H5V20Z"
+                                        fill="#333333" />
+                                </svg>
+                                <p class="textPromoativaBoxDesktop"> {{dt_inicio}} às {{dt_fim}}</p>
+                            </div>
+
+                            <div class="grupoGap8pxCenterDesktop">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" class="trophyDestop">
+                                    <path
+                                        d="M7 21V19H11V15.9C10.1833 15.7167 9.454 15.3707 8.812 14.862C8.17 14.3533 7.69933 13.716 7.4 12.95C6.15 12.8 5.104 12.2543 4.262 11.313C3.42 10.3717 2.99933 9.26733 3 8V7C3 6.45 3.196 5.979 3.588 5.587C3.98 5.195 4.45067 4.99933 5 5H7V3H17V5H19C19.55 5 20.021 5.196 20.413 5.588C20.805 5.98 21.0007 6.45067 21 7V8C21 9.26667 20.579 10.371 19.737 11.313C18.895 12.255 17.8493 12.8007 16.6 12.95C16.3 13.7167 15.829 14.3543 15.187 14.863C14.545 15.3717 13.816 15.7173 13 15.9V19H17V21H7ZM7 10.8V7H5V8C5 8.63333 5.18333 9.20433 5.55 9.713C5.91667 10.2217 6.4 10.584 7 10.8ZM12 14C12.8333 14 13.5417 13.7083 14.125 13.125C14.7083 12.5417 15 11.8333 15 11V5H9V11C9 11.8333 9.29167 12.5417 9.875 13.125C10.4583 13.7083 11.1667 14 12 14ZM17 10.8C17.6 10.5833 18.0833 10.2207 18.45 9.712C18.8167 9.20333 19 8.63267 19 8V7H17V10.8Z"
+                                        fill="#333333" />
+                                </svg>
+                                <p class="textPromoativaBoxDesktop"> {{premiacao}}</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="botoesBoxPromoativaBoxDesktop">
+                            <span class="disable-links">
+                                <a href="/links/consultas/consulta_horario_participante/{{id_promo}}"
+                                    class="botoesPromoativaBoxDesktop" role="button">HORÁRIOS CADASTRADOS</a>
+                            </span>
+
+                        </div>
+
+                        <span class="disable-links">
+
+                            <a href="/links/cadastros/cadastro_promocao_participante/{{id_promo}}"
+                                class="botaoParticiparPromoativaDesktop" role="button">PARTICIPAR</a>
+                        </span>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{else}}
+
+        {{/if}}
+        {{/if}}
+        {{/each}}
+
+    </div>
+</div>
+{{!-- fim if participante --}}
+{{else}}
+{{!-- layout menu Gestor --}}
+{{#if user.gestor}}
+<div class="container p-4">
+    <div class="row">
+        {{#each visuGestor}}
+        {{#if secap}}
+        {{!-- verifica se a promoção esta ativa (opacidade imagem and bloqueio botão perfil participante ) --}}
+        {{#if status}}
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-body gap-2">
+                    {{#if unico}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    <a href="/links/cadastros/duplicar/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Duplicar</a>
+
+                    {{else}}
+
+                    {{#if recorrente}}
+
+                    <div style="background-color:">
+                        <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                        {{!-- Deireciona para página detalhes promoção --}}
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                        <a href="/links/cadastros/cadastro_horario_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Horário</a>
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                        <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    </div>
+
+
+
+                    {{else}}
+
+                    {{#if pergunta}}
+                    {{#if tipo_pergunta}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+                    <input hidden type="text" id="tipo_pergunta" name="tipo_pergunta" value="{{tipo_pergunta}}">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <form action="" method="get" id="frm_" name="frm_" enctype="multipart/form-data"></form>
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+                    <input hidden type="text" id="tipo_pergunta" name="tipo_pergunta" value="{{tipo_pergunta}}">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <form action="" method="get" id="frm_" name="frm_" enctype="multipart/form-data"></form>
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    {{/if}}
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <br>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-body gap-2">
+                    {{#if unico}}
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    <a href="/links/cadastros/duplicar/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Duplicar</a>
+
+                    {{else}}
+
+                    {{#if recorrente}}
+
+                    <div style="background-color:">
+                        <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                        {{!-- Deireciona para página detalhes promoção --}}
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                        <a href="/links/cadastros/cadastro_horario_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Horário</a>
+                        <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    </div>
+
+
+                    {{else}}
+
+                    {{#if pergunta}}
+                    {{#if tipo_pergunta}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/consulta_participantes_perguntas_abertas/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Listar</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+                    {{/if}}
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <br>
+        </div>
+        {{/if}}
+        {{else}}
+        {{#if status}}
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-body gap-2">
+                    {{#if unico}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/consultas/sortear_promocao/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Sortear</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    <a href="/links/cadastros/duplicar/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Duplicar</a>
+
+                    {{else}}
+
+                    {{#if recorrente}}
+
+                    <div style="background-color: brown;">
+                        <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                        {{!-- Deireciona para página detalhes promoção --}}
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                        <a href="/links/cadastros/cadastro_horario_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Horário</a>
+                        <a href="/links/consultas/sortear_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Sortear</a>
+                        <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                            tabindex="-1" role="button">Resultado</a>
+                    </div>
+
+
+                    {{else}}
+
+                    {{#if pergunta}}
+                    {{#if tipo_pergunta}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+                    <input hidden type="text" id="tipo_pergunta" name="tipo_pergunta" value="{{tipo_pergunta}}">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <form action="" method="get" id="frm_" name="frm_" enctype="multipart/form-data"></form>
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/consulta_participantes_perguntas_abertas/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Listar</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+                    <input hidden type="text" id="tipo_pergunta" name="tipo_pergunta" value="{{tipo_pergunta}}">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <form action="" method="get" id="frm_" name="frm_" enctype="multipart/form-data"></form>
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/sortear_promocao/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Sortear</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    {{/if}}
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/cadastros/cadastro_concurso_loteria/{{id_promo}}">Concurso</a>
+                    <a href="/links/consultas/consulta_participante/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" id="buscar" role="button">Listar</a>
+
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <br>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-body gap-2">
+                    {{#if unico}}
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/consultas/sortear_promocao/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Sortear</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    <a href="/links/cadastros/duplicar/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Duplicar</a>
+
+                    {{else}}
+
+                    {{#if recorrente}}
+                    <div style="background-color: pink;">
+                        <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                        {{!-- Deireciona para página detalhes promoção --}}
+                        <a class="btn btn-outline-danger largura_px"
+                            href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                        <a href="/links/cadastros/cadastro_horario_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Horário</a>
+                        <a href="/links/consultas/sortear_promocao/{{id_promo}}"
+                            class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Sortear</a>
+                        <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                            tabindex="-1" role="button">Resultado</a>
+
+                    </div>
+
+                    {{else}}
+
+                    {{#if pergunta}}
+                    {{#if tipo_pergunta}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/consulta_participantes_perguntas_abertas/{{id_promo}}"
+                        class="btn btn-outline-danger largura_px" tabindex="-1" role="button">Listar</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/cadastros/cadastro_perguntas/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Perguntas</a>
+                    <a href="/links/consultas/sortear_promocao/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Sortear</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+                    {{/if}}
+
+                    {{else}}
+
+                    <input type="image" src="{{image}}" style="float:center" class="card-img-top imagem img">
+
+                    {{!-- Deireciona para página detalhes promoção --}}
+                    <a class="btn btn-outline-danger largura_px"
+                        href="/links/consultas/promocao/{{id_promo}}">Detalhes</a>
+                    <a href="/links/consultas/resultados/{{id_promo}}" class="btn btn-outline-danger largura_px"
+                        tabindex="-1" role="button">Resultado</a>
+
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <br>
+        </div>
+        {{/if}}
+        {{/if}}
+        {{else}}
+
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>Não Existem Promoções Cadastradas</p>
+                <a href="/links/cadastros/cadastro_promocao">Cadastrar Promoção</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{else}}
+
+{{!-- layout menu ADMIN --}}
+{{#if user.admin}}
+
+{{else}}
+<div class="container">
+    <div class="row">
+
+        {{#each promoativa}}
+
+        <div class="w-50">
+
+            <div class="">
+                <div class="promoativaBoxDesktop">
+
+                    <div class="imagemPromoAtivaBoxDesktop">
+                        <input type="image" src="{{image}}" class="inputImagemPromoAtivaBoxDesktop">
+                    </div>
+
+                    <input hidden type="text" value="{{id_promo}}" name="id_promo" id="id_promo">
+
+                    <div class="InformPromoativaBoxDesktop">
+
+                        <div class="grupoGap24pxNoWidhtDesktop">
+
+                            <div class="grupoGap8pxDesktop">
+
+                                <div class="grupoGap8pxCenterDesktop">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                        fill="none" class="greenCircleDesktop">
+                                        <circle cx="8" cy="8" r="8" fill="#00B400" />
+                                    </svg>
+                                    <p class="situaPromoativaBoxDesktop"> {{statusp}}</p>
+                                </div>
+
+                                <p class="nomePromoativaBoxDesktop">{{nome}}</p>
+
+                                <div class="grupoGap8pxCenterDesktop">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" class="">
+                                        <path
+                                            d="M8 14C7.71667 14 7.479 13.904 7.287 13.712C7.095 13.52 6.99934 13.2827 7 13C7 12.7167 7.096 12.479 7.288 12.287C7.48 12.095 7.71734 11.9993 8 12C8.28334 12 8.521 12.096 8.713 12.288C8.905 12.48 9.00067 12.7173 9 13C9 13.2833 8.904 13.521 8.712 13.713C8.52 13.905 8.28267 14.0007 8 14ZM12 14C11.7167 14 11.479 13.904 11.287 13.712C11.095 13.52 10.9993 13.2827 11 13C11 12.7167 11.096 12.479 11.288 12.287C11.48 12.095 11.7173 11.9993 12 12C12.2833 12 12.521 12.096 12.713 12.288C12.905 12.48 13.0007 12.7173 13 13C13 13.2833 12.904 13.521 12.712 13.713C12.52 13.905 12.2827 14.0007 12 14ZM16 14C15.7167 14 15.479 13.904 15.287 13.712C15.095 13.52 14.9993 13.2827 15 13C15 12.7167 15.096 12.479 15.288 12.287C15.48 12.095 15.7173 11.9993 16 12C16.2833 12 16.521 12.096 16.713 12.288C16.905 12.48 17.0007 12.7173 17 13C17 13.2833 16.904 13.521 16.712 13.713C16.52 13.905 16.2827 14.0007 16 14ZM5 22C4.45 22 3.979 21.804 3.587 21.412C3.195 21.02 2.99934 20.5493 3 20V6C3 5.45 3.196 4.979 3.588 4.587C3.98 4.195 4.45067 3.99933 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.021 4.196 20.413 4.588C20.805 4.98 21.0007 5.45067 21 6V20C21 20.55 20.804 21.021 20.412 21.413C20.02 21.805 19.5493 22.0007 19 22H5ZM5 20H19V10H5V20Z"
+                                            fill="#333333" />
+                                    </svg>
+                                    <p class="textPromoativaBoxDesktop"> {{dt_inicio}} às {{dt_fim}}</p>
+                                </div>
+
+                                <div class="grupoGap8pxCenterDesktop">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" class="">
+                                        <path
+                                            d="M7 21V19H11V15.9C10.1833 15.7167 9.454 15.3707 8.812 14.862C8.17 14.3533 7.69933 13.716 7.4 12.95C6.15 12.8 5.104 12.2543 4.262 11.313C3.42 10.3717 2.99933 9.26733 3 8V7C3 6.45 3.196 5.979 3.588 5.587C3.98 5.195 4.45067 4.99933 5 5H7V3H17V5H19C19.55 5 20.021 5.196 20.413 5.588C20.805 5.98 21.0007 6.45067 21 7V8C21 9.26667 20.579 10.371 19.737 11.313C18.895 12.255 17.8493 12.8007 16.6 12.95C16.3 13.7167 15.829 14.3543 15.187 14.863C14.545 15.3717 13.816 15.7173 13 15.9V19H17V21H7ZM7 10.8V7H5V8C5 8.63333 5.18333 9.20433 5.55 9.713C5.91667 10.2217 6.4 10.584 7 10.8ZM12 14C12.8333 14 13.5417 13.7083 14.125 13.125C14.7083 12.5417 15 11.8333 15 11V5H9V11C9 11.8333 9.29167 12.5417 9.875 13.125C10.4583 13.7083 11.1667 14 12 14ZM17 10.8C17.6 10.5833 18.0833 10.2207 18.45 9.712C18.8167 9.20333 19 8.63267 19 8V7H17V10.8Z"
+                                            fill="#333333" />
+                                    </svg>
+                                    <p class="textPromoativaBoxDesktop"> {{premiacao}}</p>
+                                </div>
+
+                            </div>
+
+                            <a href="/links/consultas/consulta_promocao" class="botaoParticiparPromoativaDesktop"
+                                role="button">Participar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{else}}
+
+        <div class="col-md-4 mx-auto">
+            <div class="text-center">
+                <p>Não existem promoções cadastradas</p>
+            </div>
+        </div>
+
+        {{/each}}
+
+    </div>
+</div>
+
+{{/if}}
+{{/if}}
+{{/if}}

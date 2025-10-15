@@ -1,0 +1,477 @@
+<style>
+    .form-check-input:checked {
+        background-color: #28a745;
+        /* Verde */
+        border-color: #28a745;
+        /* Verde */
+    }
+
+    /* Estilos para o rótulo (label) quando o toggle estiver ativo */
+    .form-check-input:checked+.form-check-label {
+        color: #fff;
+        /* Branco */
+    }
+
+    /* Ajuste do tamanho do toggle */
+    .form-check-input[type="checkbox"] {
+        transform: scale(1.5);
+        /* Ajuste o valor conforme necessário */
+    }
+
+    z .grupoFlexDesktop {
+        display: flex;
+        gap: 8px;
+        /* Mantém o espaçamento entre os campos */
+    }
+
+    .grupoFlexDesktop .grupoGap8pxDesktop {
+        flex: 1;
+        /* Garante que ambos os campos ocupem a mesma largura */
+    }
+
+    /* Estilos gerais para o cabeçalho */
+    .evento-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    /* Estilos da tabela em linha (sem bordas) */
+    .evento-table {
+        width: 100%;
+        border-collapse: collapse;
+        /* Remove as bordas */
+    }
+
+    .evento-table td {
+        padding: 8px 12px;
+        text-align: left;
+        vertical-align: middle;
+        /* Centraliza verticalmente */
+    }
+
+    .evento-header td {
+        vertical-align: middle;
+    }
+
+    .label-left {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #495057;
+    }
+
+    .evento-texto {
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6c757d;
+    }
+
+    /* Ajustes para iPad Mini (largura entre 600px e 768px) */
+    @media (max-width: 768px) and (min-width: 600px) {
+        .evento-header h5 {
+            font-size: 1.2rem;
+            /* Ajusta o tamanho do texto para iPad Mini */
+            margin: 4px 0;
+            /* Reduz as margens */
+            line-height: 1.3;
+            /* Ajusta o espaçamento entre linhas */
+        }
+
+        .evento-table td {
+            padding: 6px;
+            /* Reduz o espaçamento interno */
+        }
+
+        .evento-table td+td {
+            margin-top: 5px;
+            /* Ajusta o espaçamento entre elementos */
+        }
+    }
+
+    /* Ajustes para iPhone (largura até 599px) */
+    @media (max-width: 599px) {
+        .evento-header h5 {
+            font-size: 1rem;
+            /* Tamanho menor para iPhones */
+            margin: 3px 0;
+            /* Margem mais apertada */
+            line-height: 1.2;
+            /* Espaçamento compacto */
+        }
+
+        .evento-table td {
+            padding: 4px;
+            /* Menor espaçamento interno */
+            display: block;
+            /* Mantém o layout em bloco */
+            width: 100%;
+            /* Garante que ocupe toda a largura */
+            box-sizing: border-box;
+            /* Inclui bordas e paddings no cálculo de largura */
+        }
+
+        .evento-table td+td {
+            margin-top: 2px;
+            /* Espaço menor entre elementos */
+        }
+    }
+</style>
+
+<body>
+    <form action="/links/cadastros/cadastro_eventos" method="POST">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <div class="card text-center">
+                        <div class="card-body">
+
+                            <!-- Campo oculto para armazenar o ID do evento -->
+                            <input type="hidden" id="eventoId" value="{{operador.id}}">
+
+                            <!-- Cabeçalho do evento em tabela -->
+                            <div class="evento-header">
+                                <table class="evento-table">
+                                    <tr>
+                                        <td>
+                                            <p class="label-left">Evento:</p>
+                                        </td>
+                                        <td>
+                                            <p class="evento-texto">{{operador.local}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="label-left">Endereço:</p>
+                                        </td>
+                                        <td>
+                                            <p class="evento-texto">{{operador.endereco}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="label-left">Data:</p>
+                                        </td>
+                                        <td>
+                                            <p class="evento-texto">{{operador.dt_inicio}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="searchEquipamento">Pesquisar Equipamento</label>
+                                <input type="text" id="searchEquipamento" class="form-control"
+                                    placeholder="Digite o nome do equipamento">
+                                <ul id="suggestions" class="list-group"
+                                    style="max-height: 200px; overflow-y: auto; display: none;"></ul>
+                            </div>
+
+
+                            <div class="container p-4">
+                                <div class="row">
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <p class="areatitles1 mt-4"><strong>Log Comercial
+                                                        Selecionados</strong></p>
+                                                <div class="mb-3 row" style="max-height: 300px; overflow-y: auto;">
+                                                    <table id="equipamentosSelecionados" class="table table-hover"
+                                                        style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nome</th>
+                                                                <th>N° de Série</th>
+                                                                <th>Patrimônio</th>
+                                                                <th>Ação</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <!-- Lista dinâmica de selecionados -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal para exibição de comentário -->
+                            <div id="commentModal" class="modal fade" tabindex="-1" aria-labelledby="commentModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-center w-100" id="commentModalLabel">Comentário
+                                                do Equipamento</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p id="modalCommentText"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="successMessage" style="display: none; color: green; font-weight: bold;">
+                                Lista criada com sucesso!
+                            </div>
+                            <div class="d-grid gap-2 col-12 mx-auto mt-4">
+                                <button id="btnFinalizar" class="btn btn-success">Finalizar e Atualizar
+                                    Equipamentos</button>
+
+                                <a id="btnVoltar" class="btn btn-secondary" style="display: none;"
+                                    onclick="window.location.href='/links/consultas/belo_horizonte'">
+                                    Voltar para Lista de Eventos</a>
+                            </div>
+
+                            <script>
+                                const equipamentos = {{{ equipamentos }}};
+                            </script>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // Selecionar todos os botões "Ver Comentário"
+                                    document.querySelectorAll('.btn-view-comment').forEach(button => {
+                                        button.addEventListener('click', function (event) {
+                                            event.preventDefault(); // Impede o redirecionamento
+
+                                            // Obter o ID do equipamento da linha que contém o botão
+                                            const equipamentoId = button.closest('tr').dataset.name;
+
+                                            // Buscar o equipamento associado ao ID
+                                            const equipamento = equipamentosSelecionadosArray.find(e => e.id == equipamentoId);
+
+                                            // Atualizar o conteúdo do modal com a observação do equipamento
+                                            document.getElementById('modalCommentText').textContent = equipamento.observacao || 'Nenhuma observação disponível.';
+
+                                            // Mostrar o modal
+                                            var modal = new bootstrap.Modal(document.getElementById('commentModal'));
+                                            modal.show();
+                                        });
+                                    });
+
+                                    // Função para fechar o modal (opcional, se não quiser o fechamento automático no X)
+                                    document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(el => {
+                                        el.addEventListener('click', function () {
+                                            var modal = bootstrap.Modal.getInstance(document.getElementById('commentModal'));
+                                            if (modal) {
+                                                modal.hide();
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const equipamentosSelecionados = document.querySelector('#equipamentosSelecionados tbody');
+                                    const searchEquipamento = document.querySelector('#searchEquipamento');
+                                    const suggestionsContainer = document.querySelector('#suggestions');
+                                    const btnFinalizar = document.querySelector('#btnFinalizar');
+                                    const btnVoltar = document.querySelector('#btnVoltar');
+
+                                    // Inicializa o array de equipamentos disponíveis (recebido do back-end)
+                                    const equipamentosDisponiveis = equipamentos.filter(equipamento => equipamento.is_recursive === 0);
+                                    const equipamentosSelecionadosArray = [];
+
+                                    // Renderiza a lista de sugestões de equipamentos
+                                    function renderSuggestions(filteredEquipamentos) {
+                                        suggestionsContainer.innerHTML = ''; // Limpa as sugestões anteriores
+
+                                        filteredEquipamentos.forEach(equipamento => {
+                                            const suggestionItem = document.createElement('li');
+                                            suggestionItem.classList.add('list-group-item');
+                                            suggestionItem.textContent = `${equipamento.name} -- (${equipamento.otherserial})`;
+                                            suggestionItem.addEventListener('click', () => handleAdd(equipamento));
+                                            suggestionsContainer.appendChild(suggestionItem);
+                                        });
+
+                                        suggestionsContainer.style.display = filteredEquipamentos.length > 0 ? 'block' : 'none';
+                                    }
+
+                                    // Atualiza a tabela de equipamentos selecionados
+                                    function renderSelectedEquipamentos() {
+                                        equipamentosSelecionados.innerHTML = ''; // Limpa a tabela
+
+                                        equipamentosSelecionadosArray.forEach(equipamento => {
+                                            console.log('Equipamento Selecionado:', equipamento);
+
+
+                                            const newRow = document.createElement('tr');
+                                            newRow.innerHTML = `
+                                            <td>${equipamento.name}</td>
+                                            <td>${equipamento.serial}</td>
+                                            <td>${equipamento.otherserial}</td>
+                                            <td>
+                                                <button class="btn btn-danger btn-remove" data-name="${equipamento.id}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
+                                                    <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z">                                                    
+                                                    </path>
+                                                </svg>
+                                                </button>
+                                                ${equipamento.tipo_dev !== 1 && equipamento.observacao ? `<button class="btn btn-warning btn-view-comment" data-id="${equipamento.id}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
+                                                    <path d="M 12 2 A 9 9 0 0 0 3 11 A 9 9 0 0 0 12 20 L 12 23 C 12 23 19.39165 19.370314 20.761719 13.015625 A 9 9 0 0 0 20.839844 12.65625 C 20.880821 12.423525 20.923277 12.190914 20.947266 11.951172 A 9 9 0 0 0 20.957031 11.863281 C 20.982749 11.579721 21 11.293169 21 11 A 9 9 0 0 0 12 2 z"></path>
+                                                </svg>
+                                                </button>` : ''}
+                                            </td>
+                                            `;
+
+                                            // Aplicar fundo vermelho apenas se não for tipo_dev = 1
+                                            if (equipamento.tipo_dev !== 1 && equipamento.observacao) {
+                                                newRow.style.backgroundColor = '#f8d7da'; // Fundo vermelho, apenas se não for tipo_dev = 1
+                                            }
+
+                                            newRow.querySelector('.btn-remove').addEventListener('click', () => handleRemove(equipamento));
+                                            equipamentosSelecionados.appendChild(newRow);
+                                        });
+                                        document.querySelectorAll('.btn-view-comment').forEach(button => {
+                                            button.addEventListener('click', function (event) {
+                                                event.preventDefault(); // Impede o redirecionamento
+
+                                                // Obter o ID do equipamento da linha que contém o botão
+                                                const equipamentoId = this.getAttribute('data-id');
+
+                                                // Buscar o equipamento associado ao ID
+                                                const equipamento = equipamentosSelecionadosArray.find(e => e.id == equipamentoId);
+
+                                                // Atualizar o conteúdo do modal com a observação do equipamento
+                                                document.getElementById('modalCommentText').textContent = equipamento.observacao || 'Nenhuma observação disponível.';
+
+                                                // Mostrar o modal
+                                                const modal = new bootstrap.Modal(document.getElementById('commentModal'));
+                                                modal.show();
+                                            });
+                                        });
+                                    }
+
+                                    // Filtra equipamentos com base no texto de pesquisa
+                                    function filterEquipamentos(searchText) {
+                                        const searchLower = searchText.toLowerCase().trim();
+                                        return equipamentosDisponiveis.filter(equipamento =>
+                                            (equipamento.name && equipamento.name.toLowerCase().includes(searchLower)) ||
+                                            (equipamento.serial && equipamento.serial.toLowerCase().includes(searchLower)) ||
+                                            (equipamento.otherserial && equipamento.otherserial.toLowerCase().includes(searchLower))
+                                        );
+                                    }
+
+                                    // Adiciona um equipamento à lista selecionada
+                                    function handleAdd(equipamento) {
+                                        if (!equipamentosSelecionadosArray.includes(equipamento)) {
+                                            equipamentosSelecionadosArray.push(equipamento);
+                                            equipamentosDisponiveis.splice(equipamentosDisponiveis.indexOf(equipamento), 1); // Remove da lista disponível
+                                            renderSelectedEquipamentos();
+                                            searchEquipamento.value = ''; // Limpa a pesquisa
+                                            suggestionsContainer.style.display = 'none'; // Esconde as sugestões
+                                        }
+                                    }
+
+                                    // Remove um equipamento da lista selecionada
+                                    function handleRemove(equipamento) {
+                                        if (equipamentosSelecionadosArray.includes(equipamento)) {
+                                            equipamentosSelecionadosArray.splice(equipamentosSelecionadosArray.indexOf(equipamento), 1); // Remove da lista selecionada
+                                            equipamentosDisponiveis.push(equipamento); // Adiciona de volta à lista disponível
+                                            renderSelectedEquipamentos();
+                                        }
+                                    }
+                                    document.querySelector('#suggestions').style.cssText = `
+                                 
+                                    display: block !important;  /* Força a exibição da lista */
+                                    position: relative;         /* Posição relativa para ajustes */
+                                    z-index: 1000;               /* Nível de profundidade para sobrepor outros elementos */
+                                    background-color: white;    /* Cor de fundo branca */
+                                    border: 1px solid black;    /* Borda preta para separar melhor */
+                                    max-height: 200px !important; /* Aumenta a altura máxima */
+                                    overflow-y: auto;           /* Habilita rolagem vertical quando necessário */
+                                    width: 100%;                /* Faz com que a lista ocupe toda a largura disponível */
+
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra para destacar a lista */
+                                    border-radius: 8px;         /* Deixa as bordas arredondadas */
+
+                                    font-size: 18px;            /* Aumenta o tamanho da fonte para maior legibilidade */
+                                    line-height: 1.5;           /* Ajusta a altura da linha para espaçamento confortável entre itens */
+                                    padding: 0;                 /* Zera paddings internos */
+                                    margin: 0;                  /* Zera margens internas */
+                                    height: auto;                            /* Adiciona espaçamento entre os itens */                          
+`;
+
+                                    // Pesquisa dinâmica
+                                    searchEquipamento.addEventListener('input', () => {
+                                        const searchText = searchEquipamento.value;
+                                        const filteredEquipamentos = filterEquipamentos(searchText);
+                                        renderSuggestions(filteredEquipamentos);
+                                    });
+
+                                    // Fecha as sugestões quando clica fora do campo de pesquisa
+                                    document.addEventListener('click', (e) => {
+                                        if (!searchEquipamento.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                                            suggestionsContainer.style.display = 'none';
+                                        }
+                                    });
+                                    btnFinalizar.addEventListener('click', async (event) => {
+                                        event.preventDefault(); // Impede o envio do formulário padrão
+
+                                        try {
+                                            const selectedIds = equipamentosSelecionadosArray.map(equipamento => equipamento.id); // IDs dos equipamentos
+                                            const eventoId = document.querySelector('#eventoId').value; // Obtém o ID do evento de um elemento oculto
+
+                                            if (selectedIds.length === 0) {
+                                                alert('Nenhum equipamento selecionado!');
+                                                return;
+                                            }
+
+                                            if (!eventoId) {
+                                                alert('ID do evento não encontrado!');
+                                                return;
+                                            }
+
+                                            const response = await fetch('/links/consultas/atualizarEquipamentos', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify({ ids: selectedIds, evt: eventoId }), // Inclui o Evt no corpo
+                                            });
+
+                                            if (response.ok) {
+                                                const removeButtons = document.querySelectorAll('.btn-remove');
+                                                removeButtons.forEach(button => button.style.display = 'none');
+                                                successMessage.style.display = 'block';
+
+                                                // Oculta o botão de finalizar e mostra o botão de voltar
+                                                btnFinalizar.style.display = 'none';
+                                                btnVoltar.style.display = 'block';
+                                            } else {
+                                                const errorMessage = await response.text();
+                                                alert(`Erro ao atualizar equipamentos: ${errorMessage}`);
+                                            }
+                                        } catch (error) {
+                                            console.error('Erro ao atualizar equipamentos:', error);
+                                            alert('Ocorreu um erro. Tente novamente mais tarde.');
+                                        }
+                                    });
+                                });
+                            </script>
+
+    </form>
+
+</body>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script type="text/javascript" language="javascript" src="../../../js/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+{{!--
+<script type="text/javascript"
+    src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.5/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.1/sl-1.3.1/datatables.min.js"></script>
+--}}
+
+<script>
+    function goBack() {
+        window.history.back()
+    }
+
+</script>

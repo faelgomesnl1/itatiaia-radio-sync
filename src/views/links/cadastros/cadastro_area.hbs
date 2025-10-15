@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<body>
+  <form action="/links/cadastros/cadastro_area" method="POST">
+
+    <div class="grupoGap48pxDesktopCadastro">
+
+      <div class="grupoGap40px">
+        <div class="grupoGap24px">
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Nome </p>
+            <input type="text" name="nome" id="nome" class="inputPadraoDesktop" autofocus required>
+          </div>
+
+          <div class="grupoGap8pxDesktop">
+            <p for="fullname" class="textoInputPadraoDesktop"> Seção </p>
+            <select class="inputPadraoDesktop" name="secao" id="secao" required>
+              <option class="inputPadraoDesktop" selected disabled hidden>Selecione a Seção</option>
+              {{#each secao}}
+              <option id="{{id}}" value="{{id}}"> {{nome_final}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+        <button class="botaoPadraoDesktop" onclick="valida()"> Cadastrar </button>
+
+      </div>
+  </form>
+
+</body>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  function valida() {
+    const full = document.getElementById('fullname');
+    const user = document.getElementById('username');
+    const pass = document.getElementById('password');
+
+    if (full.value == "") {
+      alert("O campo Nome Completo não pode estar vazio.");
+      full.focus();
+      return false;
+    };
+    if (user.value == "") {
+      alert("O campo Usuário não pode estar vazio.");
+      user.focus();
+      return false;
+    };
+    if (pass.value == "") {
+      alert("O campo Senha não pode estar vazio.");
+      pass.focus()
+      return false;
+    };
+  }
+</script>
